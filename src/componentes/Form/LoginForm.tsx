@@ -4,45 +4,31 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "../UI/Button"
 import { Input } from "./Input"
-import { registerUser } from "@/actions/register-user.action"
-import { registerSchema, RegisterSchema } from "@/schemas/auth.schema"
+import { loginUser } from "@/actions/login-user.action"
+import { loginSchema, LoginSchema } from "@/schemas/auth.schema"
 
-export const RegisterForm = () => {
+export const LoginForm = () => {
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterSchema>({
-    resolver: zodResolver(registerSchema),
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
   })
 
-  const onSubmit = async (data: RegisterSchema) => {
-    const result = await registerUser(data)
+  const onSubmit = async (data: LoginSchema) => {
+    const result = await loginUser(data)
 
     if (result?.error) {
       setError("root", {
         message: result.error,
       })
-      return
     }
   }
 
   return (
     <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="username" className="text-sm font-medium text-zinc-400">Nombre de usuario</label>
-        <Input
-          type="text"
-          id="username"
-          placeholder="johndoe"
-          {...register("username")}
-        />
-        {errors.username && (
-          <span className="text-xs text-red-500">{errors.username.message}</span>
-        )}
-      </div>
-
       <div className="flex flex-col gap-2">
         <label htmlFor="email" className="text-sm font-medium text-zinc-400">Email</label>
         <Input
@@ -78,7 +64,7 @@ export const RegisterForm = () => {
         type="submit"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Registrando..." : "Registrarse"}
+        {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
       </Button>
     </form>
   )
