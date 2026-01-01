@@ -5,7 +5,7 @@ import { RegisterForm } from "@/componentes/Form/RegisterForm";
 import { LoginForm } from "@/componentes/Form/LoginForm";
 
 export const AuthWrapper = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   return (
     <section className="mt-30 z-20 p-4 w-full max-w-120 flex flex-col gap-3 rounded-2xl bg-neutral-900 border border-zinc-800">
@@ -16,7 +16,7 @@ export const AuthWrapper = () => {
       {isLogin ? <LoginForm /> : <RegisterForm />}
 
       <button
-        onClick={() => setIsLogin(!isLogin)}
+        onClick={() => setIsLogin(prevLogin => !prevLogin)}
         className="text-xs w-fit p-2 hover:bg-neutral-600/70 transition-all rounded-xl cursor-pointer"
       >
         {isLogin ? "¿No tienes cuenta? Regístrate" : "¿Deseas iniciar sesión?"}
